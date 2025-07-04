@@ -6,8 +6,12 @@ import 'screens/cart_screen.dart';
 import 'screens/main_page.dart';
 import 'providers/cart_providers.dart';
 import 'providers/theme_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.red,
+        primaryColor: Colors.black,
         fontFamily: 'Roboto',
       ),
       themeMode: themeProvider.currentTheme, // 👈 Connect theme mode

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'cart_screen.dart'; // ⬅️ Make sure this path is correct
-import 'package:food_delivery/screens/profile_screen.dart';
+import 'profile_screen.dart';
 
 // You can also create profile_screen.dart and orders_screen.dart for future use
 
@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
+            icon: Icon(Icons.cabin_outlined),
             label: "Explore",
           ),
           BottomNavigationBarItem(

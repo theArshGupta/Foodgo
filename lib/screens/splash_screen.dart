@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // make sure the path is correct
 import 'package:food_delivery/screens/main_page.dart';
+import 'package:food_delivery/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     });
   }
