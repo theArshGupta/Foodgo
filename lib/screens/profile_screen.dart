@@ -1,8 +1,9 @@
-// 📁 lib/screens/profile_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../providers/theme_provider.dart';
+import 'login_screen.dart';
+import 'order_history.dart'; // Add this screen separately
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -11,6 +12,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final isDarkMode = themeProvider.isDarkMode;
+    final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -26,20 +28,20 @@ class ProfileScreen extends StatelessWidget {
               const CircleAvatar(
                 radius: 40,
                 backgroundImage: NetworkImage(
-                  'https://static.wikia.nocookie.net/marvelcentral/images/9/97/Tony-Stark.jpg/revision/latest?cb=20130429010603',
+                  'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
                 ),
               ),
               const SizedBox(width: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Tony_stark',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    user?.displayName ?? "User",
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'I_love_you_3000@gmail.com',
-                    style: TextStyle(color: Colors.grey),
+                    user?.email ?? "No email",
+                    style: const TextStyle(color: Colors.grey),
                   ),
                 ],
               )
@@ -47,28 +49,32 @@ class ProfileScreen extends StatelessWidget {
           ),
           const SizedBox(height: 30),
 
-          // 📁 Account Section
+          // 📦 Order History
           const Text(
             'Account',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8),
-          _buildListTile(context, Icons.edit, 'Edit Profile'),
-          _buildListTile(context, Icons.location_on, 'Saved Addresses'),
-          _buildListTile(context, Icons.payment, 'Payments'),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.history, color: Colors.red),
+            title: const Text('Order History'),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const OrderHistoryPage()),
+              );
+            },
+          ),
 
           const SizedBox(height: 24),
 
-          // ⚙️ Settings Section
+          // 🌙 Dark Mode Switch
           const Text(
             'Settings',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const SizedBox(height: 8),
-          _buildListTile(context, Icons.notifications, 'Notifications'),
-          _buildListTile(context, Icons.language, 'Language'),
-
-          // 🌙 Dark Mode Switch
           SwitchListTile(
             title: const Text("Dark Mode"),
             value: isDarkMode,
@@ -78,15 +84,15 @@ class ProfileScreen extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // 🚪 Logout
+          // 🚪 Logout Button
           Center(
             child: TextButton.icon(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Logged Out"),
-                    duration: Duration(seconds: 1),
-                  ),
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => const LoginPage()),
+                      (route) => false,
                 );
               },
               icon: const Icon(Icons.logout, color: Colors.red),
@@ -98,23 +104,6 @@ class ProfileScreen extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-
-  Widget _buildListTile(BuildContext context, IconData icon, String title) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: Colors.red),
-      title: Text(title),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(
-          content: Text("$title Selected"),
-          duration: const Duration(milliseconds: 800), // Shorter duration
-        ));
-      },
     );
   }
 }

@@ -74,7 +74,7 @@ class CheckoutScreen extends StatelessWidget {
                 ),
               ),
               child: const Center(
-                child: Text("Place Order", style: TextStyle(fontSize: 16)),
+                child: Text("Place Order", style: TextStyle(fontSize: 16,color: Colors.white)),
               ),
             ),
           ],

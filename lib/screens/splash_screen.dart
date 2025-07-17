@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // make sure the path is correct
 import 'package:food_delivery/screens/main_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:food_delivery/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,38 +18,53 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // Navigate to MainPage after 2.5 seconds
-    Future.delayed(const Duration(seconds: 2), () {
+    _navigateBasedOnAuth();
+  }
+
+  void _navigateBasedOnAuth() async {
+    await Future.delayed(const Duration(seconds: 2)); // splash delay
+
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // ✅ User is logged in
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+        MaterialPageRoute(builder: (_) => const MainPage()),
       );
-    });
+    } else {
+      // 🔐 User not logged in
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginPage()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red[400], // Zomato-like red
+      backgroundColor: Colors.red.shade400,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // App Name
+            // App name
             Text(
               'FOODGO',
-              style: TextStyle(
-                fontSize: 42,
-                fontWeight: FontWeight.bold,
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 56,
                 color: Colors.white,
-                letterSpacing: 2,
+                letterSpacing: 4,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
 
             // Tagline
             Text(
-              'Delivering Cravings',
-              style: TextStyle(
+              'Don’t stand in line. Sit and dine.',
+              style: GoogleFonts.poppins(
                 fontSize: 16,
                 color: Colors.white70,
                 letterSpacing: 1,
