@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// make sure the path is correct
 import 'package:food_delivery/screens/main_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:food_delivery/screens/login_screen.dart';
@@ -17,12 +16,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // Navigate to MainPage after 2.5 seconds
     _navigateBasedOnAuth();
   }
 
   void _navigateBasedOnAuth() async {
-    await Future.delayed(const Duration(seconds: 2)); // splash delay
+    await Future.delayed(const Duration(seconds: 2));
 
     final user = FirebaseAuth.instance.currentUser;
 

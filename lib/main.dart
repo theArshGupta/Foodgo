@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black,
         fontFamily: 'Roboto',
       ),
-      themeMode: themeProvider.currentTheme, // 👈 Connect theme mode
+      themeMode: themeProvider.currentTheme, //
       home: const SplashScreen(),
       routes: {
         '/main': (context) => const MainPage(),

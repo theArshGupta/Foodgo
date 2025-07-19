@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -17,13 +18,26 @@ class _SignUpPageState extends State<SignUpPage> {
 
   bool _isLoading = false;
 
+  Future<void> saveUserToFirestore(User user, String name) async {
+    final userDoc = FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+    final data = {
+      'uid': user.uid,
+      'name': name,
+      'email': user.email,
+      'joinedAt': DateTime.now().toIso8601String(),
+    };
+
+    await userDoc.set(data);
+  }
+
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
       try {
         // ✅ Firebase account creation
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        final credential =await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
@@ -36,6 +50,8 @@ class _SignUpPageState extends State<SignUpPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Account created successfully 🎉")),
         );
+
+        await saveUserToFirestore(credential.user!, _nameController.text.trim());
 
         Navigator.pushReplacement(
           context,
