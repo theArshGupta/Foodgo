@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'screens/splash_screen.dart';
 import 'screens/checkout_screen.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const MainPage(),
         '/cart': (context) => const CartScreen(),
         '/checkout': (context) => const CheckoutScreen(),
+        '/login':(context) => const LoginPage(),
       },
     );
   }

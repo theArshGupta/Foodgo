@@ -26,16 +26,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (user != null) {
       // ✅ User is logged in
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const MainPage()),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (_) => const MainPage()),
+      // );
+
+      Navigator.pushReplacementNamed(context, '/main');
     } else {
       // 🔐 User not logged in
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LoginPage()),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (_) => const LoginPage()),
+      // );
+
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
