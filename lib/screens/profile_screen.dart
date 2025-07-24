@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../providers/theme_provider.dart';
 import 'login_screen.dart';
-import 'order_history.dart'; // Add this screen separately
+import 'order_history.dart';
+import 'edit_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -22,29 +23,43 @@ class ProfileScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // 👤 Profile Header
+          // 👤 Profile Header with Edit Button
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const CircleAvatar(
-                radius: 40,
-                backgroundImage: NetworkImage(
-                  'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-                ),
-              ),
-              const SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Text(
-                    user?.displayName ?? "User",
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  const CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
+                      'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                    ),
                   ),
-                  Text(
-                    user?.email ?? "No email",
-                    style: const TextStyle(color: Colors.grey),
+                  const SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        user?.displayName ?? "User",
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        user?.email ?? "No email",
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ],
                   ),
                 ],
-              )
+              ),
+              IconButton(
+                icon: const Icon(Icons.edit, color: Colors.red),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const EditProfilePage()),
+                  );
+                },
+              ),
             ],
           ),
           const SizedBox(height: 30),

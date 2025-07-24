@@ -35,12 +35,12 @@ class _SearchBarState extends State<SearchBar> {
       decoration: InputDecoration(
         hintText: "Search for dishes...",
         prefixIcon: const Icon(Icons.search),
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.mic),
-          onPressed: () {
-            // Optional mic logic here
-          },
-        ),
+        // suffixIcon: IconButton(
+        //   icon: const Icon(Icons.mic),
+        //   onPressed: () {
+        //     // Optional mic logic here
+        //   },
+        // ),
         filled: true,
         fillColor: Colors.grey[200],
         border: OutlineInputBorder(

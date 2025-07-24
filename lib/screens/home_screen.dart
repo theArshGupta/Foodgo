@@ -111,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Icon(Icons.arrow_drop_down),
+                        // Icon(Icons.arrow_drop_down),
                       ],
                     ),
                     const CircleAvatar(
